@@ -64,6 +64,6 @@ Params > Header > Accept Coding  - Identity (To make sure its not in other langu
 ** Notes  **
 -Json
 -Wifi use SSID to filter the "extra" E.g. STAFF, NYP-Account, NYP-SponsoredUser
--ml2 server (Forgot the full name)
+-ml2.internalpositioning.com server 
 
 --------------------------------
