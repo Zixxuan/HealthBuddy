@@ -18,7 +18,7 @@ https://developers.google.com/android/for-all/vocab-words/?hl=en
 -Navigation
 
 -- Hardware Used  --
--Android Phone
+-Android Phone Nexus 5 Version 6.0.1
 
 -- Software Used --
 -Android Studio 2.3.3
