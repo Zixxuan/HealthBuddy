@@ -35,6 +35,9 @@ https://git-scm.com/
 -FireBase
 https://firebase.google.com/
 
+-Find API Methods
+https://www.internalpositioning.com/api/
+
 ** Notes  **
 
 --------------------------------
@@ -69,6 +72,9 @@ Params > Header > Accept Coding  - Identity (To make sure its not in other langu
 ** Notes  **
 -Json
 -Wifi use SSID to filter the "extra" E.g. STAFF, NYP-Account, NYP-SponsoredUser
--ml2.internalpositioning.com server 
 -Use open source server
 --------------------------------
+
+-API Resources 
+-- FIND API ml2.internalpositioning.com
+    - Parameters required 
