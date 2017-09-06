@@ -44,6 +44,8 @@ public class MainActivity extends AppCompatActivity {
                 //Get locations from API Via HTTP GET
                 //Testing for pull
 
+                //Pull test @
+
                 // Append result from json into locationView -> locationView.setText("");
             }
         });
