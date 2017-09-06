@@ -42,6 +42,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view){
                 //Get locations from API Via HTTP GET
+                //Testing for pull
 
                 // Append result from json into locationView -> locationView.setText("");
             }
