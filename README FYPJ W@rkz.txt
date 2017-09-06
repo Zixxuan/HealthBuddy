@@ -44,7 +44,10 @@ HTTP Methods: GET vs. POST
 https://www.w3schools.com/tags/ref_httpmethods.asp
 
 -High-Precision Indoor Positioning Framework
+*FIND V0.5
 https://github.com/schollz/find
+*FIND- Indoor Positioning System (Android Client App)
+https://github.com/schollz/find-client-android
 https://www.internalpositioning.com/
 
 -SSID Logger
