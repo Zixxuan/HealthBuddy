@@ -47,45 +47,6 @@ MainActivity extends AppCompatActivity
 
 
 
-        ImageButton helpButton;
-
-        //Help Button - Used for Language for now
-        helpButton = (ImageButton) findViewById(R.id.imageButtonHelp);
-        helpButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
-                View mView = getLayoutInflater().inflate(R.layout.language_spinner, null);
-                mBuilder.setTitle("Select Your Preferred Language");
-                final Spinner mSpinner = (Spinner) mView.findViewById(R.id.spinnerLanguage);
-                ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
-                        android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.languageList));
-                adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                mSpinner.setAdapter(adapter);
-
-                mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        if (!mSpinner.getSelectedItem().toString().equalsIgnoreCase("Select Your Preferred Language")) {
-                            Toast.makeText(MainActivity.this, mSpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
-                            dialogInterface.dismiss();
-                        }
-                    }
-                });
-
-                mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-                        dialogInterface.dismiss();
-                    }
-                });
-
-                mBuilder.setView(mView);
-                AlertDialog dialog = mBuilder.create();
-                dialog.show();
-
-            }
-        });
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -146,7 +107,36 @@ MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_Preferences) {
 
-            // do something
+
+            AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
+            View mView = getLayoutInflater().inflate(R.layout.language_spinner, null);
+            mBuilder.setTitle("Select Your Preferred Language");
+            final Spinner mSpinner = (Spinner) mView.findViewById(R.id.spinnerLanguage);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(MainActivity.this,
+                    android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.languageList));
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            mSpinner.setAdapter(adapter);
+
+            mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if (!mSpinner.getSelectedItem().toString().equalsIgnoreCase("Select Your Preferred Language")) {
+                        Toast.makeText(MainActivity.this, mSpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+                        dialogInterface.dismiss();
+                    }
+                }
+            });
+
+            mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+
+            mBuilder.setView(mView);
+            AlertDialog dialog = mBuilder.create();
+            dialog.show();
 
         } else if (id == R.id.nav_aboutWayFinder) {
 

@@ -11,9 +11,10 @@
 
 
     <ListView
+        android:id="@+id/listView"
         android:layout_width="0dp"
-        android:layout_height="425dp"
-        android:layout_marginBottom="7dp"
+        android:layout_height="0dp"
+        android:layout_marginBottom="10dp"
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -22,7 +23,9 @@
         tools:layout_constraintBottom_creator="1"
         tools:layout_constraintLeft_creator="1"
         tools:layout_constraintRight_creator="1"
-        android:id="@+id/listView" />
+        android:layout_marginTop="12dp"
+        app:layout_constraintTop_toBottomOf="@+id/learnButton"
+        tools:layout_constraintTop_creator="1" />
 
     <Button
         android:id="@+id/learnButton"
@@ -40,21 +43,23 @@
 
     <EditText
         android:id="@+id/locationText"
-        android:layout_width="0dp"
-        android:layout_height="45dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="18dp"
+        android:layout_marginEnd="13dp"
+        android:layout_marginStart="16dp"
+        android:layout_marginTop="16dp"
         android:ems="10"
         android:hint="Enter Location Here"
         android:inputType="textPersonName"
-        app:layout_constraintRight_toLeftOf="@+id/learnButton"
-        tools:layout_constraintTop_creator="1"
-        tools:layout_constraintRight_creator="1"
-        tools:layout_constraintBottom_creator="1"
         app:layout_constraintBottom_toTopOf="@+id/listView"
-        android:layout_marginStart="16dp"
-        android:layout_marginEnd="13dp"
-        android:layout_marginTop="16dp"
-        tools:layout_constraintLeft_creator="1"
-        android:layout_marginBottom="18dp"
         app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintRight_toLeftOf="@+id/learnButton"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:layout_constraintBottom_creator="1"
+        tools:layout_constraintLeft_creator="1"
+        tools:layout_constraintRight_creator="1"
+        tools:layout_constraintTop_creator="1" />
+
+
 </android.support.constraint.ConstraintLayout>
