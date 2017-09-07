@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.nfc.Tag;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -97,9 +98,7 @@ public class learnClass extends AppCompatActivity implements NavigationView.OnNa
         int id = item.getItemId();
 
         if (id == R.id.nav_Learn) {
-            Intent learnIntent = new Intent(this, learnClass.class);
-            startActivity(learnIntent);
-
+            //No Need To Add Learn
         } else if (id == R.id.nav_Direction) {
 
         } else if (id == R.id.nav_Help) {
@@ -137,6 +136,9 @@ public class learnClass extends AppCompatActivity implements NavigationView.OnNa
             dialog.show();
         } else if (id == R.id.nav_aboutWayFinder) {
 
+        } else if (id == R.id.nav_Home){
+            Intent homeIntent = new Intent(this, MainActivity.class);
+            startActivity(homeIntent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

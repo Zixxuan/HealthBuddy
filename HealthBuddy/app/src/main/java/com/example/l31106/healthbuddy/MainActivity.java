@@ -140,6 +140,8 @@ MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_aboutWayFinder) {
 
+        } else if (id == R.id.nav_Home) {
+            //No Need To Add Learn
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
