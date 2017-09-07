@@ -59,7 +59,7 @@ public class learnClass extends AppCompatActivity implements NavigationView.OnNa
 
             @Override
             public void onClick(View view){
-                // Use wifiManager to scan for AP
+                // Use wifiManager to scan for AP using FIND API
 
             }
         });
