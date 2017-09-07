@@ -32,7 +32,7 @@ public class MainActivity extends AppCompatActivity
             }
         });
 
-
+//Hello everyone
 
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
@@ -90,6 +90,8 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_Help) {
 
         } else if (id == R.id.nav_settings) {
+
+            // do something
 
         } else if (id == R.id.nav_aboutWayFinder) {
 
