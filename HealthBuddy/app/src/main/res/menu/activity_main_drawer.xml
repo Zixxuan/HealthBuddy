@@ -25,7 +25,7 @@
         android:checkableBehavior="none">
         <item
             android:id="@+id/nav_Preferences"
-            android:title="Settings" />
+            android:title="Language Preference" />
         <item
             android:id="@+id/nav_aboutWayFinder"
             android:title="About Way Finder" />
