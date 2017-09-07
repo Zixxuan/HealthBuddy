@@ -37,9 +37,9 @@ MainActivity extends AppCompatActivity
 
         learnButton = (ImageButton) findViewById(R.id.imageButtonLearn);
 
-        learnButton.setOnClickListener(new View.OnClickListener(){
+        learnButton.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v){
+            public void onClick(View v) {
                 Intent loadLearnActivity = new Intent(MainActivity.this, learnClass.class);
                 startActivity(loadLearnActivity);
             }
