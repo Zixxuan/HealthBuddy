@@ -1,5 +1,6 @@
 package com.example.l31106.healthbuddy;
 
+import android.content.ClipData;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
@@ -89,13 +90,14 @@ public class MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_Learn) {
-
+            Intent learnIntent = new Intent(this, learnClass.class);
+            startActivity(learnIntent);
 
         } else if (id == R.id.nav_Direction) {
 
         } else if (id == R.id.nav_Help) {
 
-        } else if (id == R.id.nav_settings) {
+        } else if (id == R.id.nav_Preferences) {
 
             // do something
 

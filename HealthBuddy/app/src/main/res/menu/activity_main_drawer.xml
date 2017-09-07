@@ -24,7 +24,7 @@
         android:id="@+id/menu_bottom"
         android:checkableBehavior="none">
         <item
-            android:id="@+id/nav_settings"
+            android:id="@+id/nav_Preferences"
             android:title="Settings" />
         <item
             android:id="@+id/nav_aboutWayFinder"

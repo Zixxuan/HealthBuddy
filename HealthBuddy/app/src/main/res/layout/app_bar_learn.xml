@@ -20,4 +20,6 @@
 
     </android.support.design.widget.AppBarLayout>
 
+    <include layout="@layout/learn_activity" />
+
 </android.support.design.widget.CoordinatorLayout>

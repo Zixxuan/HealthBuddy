@@ -9,7 +9,6 @@
     tools:context="com.example.l31106.healthbuddy.learnClass"
     tools:showIn="@layout/app_bar_learn">
 
-    <include layout="@layout/app_bar_learn" />
     <TextView
         android:id="@+id/textView3"
         android:layout_width="216dp"
