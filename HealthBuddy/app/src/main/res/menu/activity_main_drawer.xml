@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group
+        android:id="@+id/menu_top"
+        android:checkableBehavior="single">
+        <item
+            android:id="@+id/nav_Learn"
+            android:icon="@drawable/ic_menu_configure"
+            android:title="Learn" />
+
+        <item
+            android:id="@+id/nav_Direction"
+            android:icon="@drawable/ic_menu_direction"
+            android:title="Direction"/>
+
+        <item
+            android:id="@+id/nav_Help"
+            android:icon="@drawable/ic_menu_help"
+            android:title="Help" />
+    </group>
+
+    <group
+        android:id="@+id/menu_bottom"
+        android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_settings"
+            android:title="Settings" />
+        <item
+            android:id="@+id/nav_aboutWayFinder"
+            android:title="About Way Finder" />
+    </group>
+</menu>
