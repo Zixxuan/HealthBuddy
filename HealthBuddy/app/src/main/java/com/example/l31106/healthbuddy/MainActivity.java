@@ -91,6 +91,8 @@ public class MainActivity extends AppCompatActivity
 
         } else if (id == R.id.nav_settings) {
 
+            // do something
+
         } else if (id == R.id.nav_aboutWayFinder) {
 
         }
