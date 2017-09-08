@@ -1,13 +1,6 @@
 package com.example.l31106.healthbuddy;
 
-import android.app.Activity;
-import android.content.BroadcastReceiver;
-import android.content.Context;
 import android.content.DialogInterface;
-import android.content.Intent;
-import android.content.IntentFilter;
-import android.net.wifi.WifiManager;
-import android.nfc.Tag;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -18,7 +11,6 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,14 +24,16 @@ import android.widget.Toast;
  * Created by L31106 on 9/7/2017.
  */
 
-public class learnClass extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
+public class LearnClass extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
 
-       TextView locText;
+    //Variables
+    TextView locText;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.learn_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
@@ -63,9 +57,6 @@ public class learnClass extends AppCompatActivity implements NavigationView.OnNa
 
             }
         });
-
-
-
     }
 
 
@@ -105,11 +96,11 @@ public class learnClass extends AppCompatActivity implements NavigationView.OnNa
 
         } else if (id == R.id.nav_Preferences) {
 
-            AlertDialog.Builder mBuilder = new AlertDialog.Builder(learnClass.this);
+            AlertDialog.Builder mBuilder = new AlertDialog.Builder(LearnClass.this);
             View mView = getLayoutInflater().inflate(R.layout.language_spinner, null);
             mBuilder.setTitle("Select Your Preferred Language");
             final Spinner mSpinner = (Spinner) mView.findViewById(R.id.spinnerLanguage);
-            ArrayAdapter<String> adapter = new ArrayAdapter<String>(learnClass.this,
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(LearnClass.this,
                     android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.languageList));
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             mSpinner.setAdapter(adapter);
@@ -118,7 +109,7 @@ public class learnClass extends AppCompatActivity implements NavigationView.OnNa
                 @Override
                 public void onClick(DialogInterface dialogInterface, int i) {
                     if (!mSpinner.getSelectedItem().toString().equalsIgnoreCase("Select Your Preferred Language")) {
-                        Toast.makeText(learnClass.this, mSpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+                        Toast.makeText(LearnClass.this, mSpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
                         dialogInterface.dismiss();
                     }
                 }
@@ -138,6 +129,8 @@ public class learnClass extends AppCompatActivity implements NavigationView.OnNa
 
         } else if (id == R.id.nav_Home){
             Intent homeIntent = new Intent(this, MainActivity.class);
+            //Prevent Stacking
+            homeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(homeIntent);
         }
 

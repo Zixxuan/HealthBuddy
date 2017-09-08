@@ -4,7 +4,7 @@ package com.example.l31106.healthbuddy;
  * Created by L31106 on 9/7/2017.
  */
 
-public class mac {
+public class Mac {
     private int rssi;
     private String mac;
 

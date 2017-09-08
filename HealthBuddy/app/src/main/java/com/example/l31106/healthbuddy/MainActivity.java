@@ -1,11 +1,8 @@
 package com.example.l31106.healthbuddy;
 
-import android.content.ClipData;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -17,7 +14,6 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -30,23 +26,9 @@ MainActivity extends AppCompatActivity
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        ImageButton learnButton;
-
-        learnButton = (ImageButton) findViewById(R.id.imageButtonLearn);
-
-        learnButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent loadLearnActivity = new Intent(MainActivity.this, learnClass.class);
-                startActivity(loadLearnActivity);
-            }
-        });
-
-
-
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -56,6 +38,21 @@ MainActivity extends AppCompatActivity
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+
+        ImageButton learnButton;
+
+        learnButton = (ImageButton) findViewById(R.id.imageButtonLearn);
+
+        learnButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent loadLearnActivity = new Intent(MainActivity.this, LearnClass.class);
+                //Prevent Stacking
+                loadLearnActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(loadLearnActivity);
+            }
+        });
     }
 
 
@@ -98,15 +95,15 @@ MainActivity extends AppCompatActivity
         int id = item.getItemId();
 
         if (id == R.id.nav_Learn) {
-            Intent learnIntent = new Intent(this, learnClass.class);
+            Intent learnIntent = new Intent(this, LearnClass.class);
+            //Added code try prevent stack
+            learnIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(learnIntent);
-
         } else if (id == R.id.nav_Direction) {
 
         } else if (id == R.id.nav_Help) {
 
         } else if (id == R.id.nav_Preferences) {
-
 
             AlertDialog.Builder mBuilder = new AlertDialog.Builder(MainActivity.this);
             View mView = getLayoutInflater().inflate(R.layout.language_spinner, null);

@@ -8,7 +8,7 @@ import java.util.ArrayList;
  * Created by L31106 on 9/7/2017.
  */
 
-public class location {
+public class Location {
    private String group;
     private String username;
     private String location;
