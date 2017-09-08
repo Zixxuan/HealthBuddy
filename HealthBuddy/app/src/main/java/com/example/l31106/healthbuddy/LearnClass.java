@@ -1,8 +1,10 @@
 package com.example.l31106.healthbuddy;
 
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
@@ -15,6 +17,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -26,6 +29,9 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.lang.reflect.Array;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 
@@ -37,6 +43,9 @@ public class LearnClass extends AppCompatActivity implements NavigationView.OnNa
 
     //Variables
     TextView locText;
+    int counter;
+    TextView rText;
+    WifiManager wmgr;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -45,46 +54,46 @@ public class LearnClass extends AppCompatActivity implements NavigationView.OnNa
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
+        wmgr = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
+        wmgr.startScan();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
+        rText = (TextView) findViewById(R.id.recText);
         locText = (TextView) findViewById(R.id.locationText);
         Button locButton = (Button)findViewById(R.id.learnLocButton);
-        ListView listView = (ListView) findViewById( R.id.listView );
-
         locButton.setOnClickListener(new View.OnClickListener(){
+
+
 
             @Override
             public void onClick(View view){
-                WifiManager wifiMgr = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
-
-                if(wifiMgr.isWifiEnabled()){
-                    WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
-                    if(wifiInfo.getSupplicantState().toString().equals("COMPLETED")) {
-                        wifiMgr.startScan();
-                        List<ScanResult> scannerList = wifiMgr.getScanResults();
+                if(wmgr.isWifiEnabled()){
+                    WifiInfo wifiInfo = wmgr.getConnectionInfo();
+                   if(wifiInfo.getSupplicantState().toString().equals("COMPLETED")) {
+                    Toast.makeText(LearnClass.this, wifiInfo.getBSSID() + "", Toast.LENGTH_SHORT).show();
 
 
-                       // Toast.makeText(LearnClass.this, wifiInfo.getBSSID() + "", Toast.LENGTH_SHORT).show();
-                    }
+                   }
 
                 }else{
                     Toast.makeText(LearnClass.this, "Open Your WIFI Connection" , Toast.LENGTH_SHORT).show();
                 }
 
+
+
+
             }
+
+
         });
-
     }
-
-
 
 
 
