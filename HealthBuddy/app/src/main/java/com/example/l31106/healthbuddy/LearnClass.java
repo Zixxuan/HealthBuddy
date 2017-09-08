@@ -1,7 +1,11 @@
 package com.example.l31106.healthbuddy;
 
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.wifi.ScanResult;
+import android.net.wifi.WifiInfo;
+import android.net.wifi.WifiManager;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -16,9 +20,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by L31106 on 9/7/2017.
@@ -48,16 +57,35 @@ public class LearnClass extends AppCompatActivity implements NavigationView.OnNa
 
         locText = (TextView) findViewById(R.id.locationText);
         Button locButton = (Button)findViewById(R.id.learnLocButton);
+        ListView listView = (ListView) findViewById( R.id.listView );
 
         locButton.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view){
-                // Use wifiManager to scan for AP using FIND API
+                WifiManager wifiMgr = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+
+                if(wifiMgr.isWifiEnabled()){
+                    WifiInfo wifiInfo = wifiMgr.getConnectionInfo();
+                    if(wifiInfo.getSupplicantState().toString().equals("COMPLETED")) {
+                        wifiMgr.startScan();
+                        List<ScanResult> scannerList = wifiMgr.getScanResults();
+
+
+                       // Toast.makeText(LearnClass.this, wifiInfo.getBSSID() + "", Toast.LENGTH_SHORT).show();
+                    }
+
+                }else{
+                    Toast.makeText(LearnClass.this, "Open Your WIFI Connection" , Toast.LENGTH_SHORT).show();
+                }
 
             }
         });
+
     }
+
+
+
 
 
     @Override
