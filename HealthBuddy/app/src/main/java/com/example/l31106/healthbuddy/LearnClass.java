@@ -23,6 +23,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleAdapter;
 import android.widget.Spinner;
@@ -46,26 +47,33 @@ public class LearnClass extends AppCompatActivity implements NavigationView.OnNa
     int counter;
     TextView rText;
     WifiManager wmgr;
+    private ListView lv;
+    ArrayList<String> locationListArray = new ArrayList<String>();
+
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.learn_main);
 
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         wmgr = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
-        wmgr.startScan();
+        lv = (ListView) findViewById(R.id.locList);
+
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-        rText = (TextView) findViewById(R.id.recText);
+    //    rText = (TextView) findViewById(R.id.recText);
         locText = (TextView) findViewById(R.id.locationText);
         Button locButton = (Button)findViewById(R.id.learnLocButton);
         locButton.setOnClickListener(new View.OnClickListener(){
@@ -77,17 +85,30 @@ public class LearnClass extends AppCompatActivity implements NavigationView.OnNa
                 if(wmgr.isWifiEnabled()){
                     WifiInfo wifiInfo = wmgr.getConnectionInfo();
                    if(wifiInfo.getSupplicantState().toString().equals("COMPLETED")) {
-                    Toast.makeText(LearnClass.this, wifiInfo.getBSSID() + "", Toast.LENGTH_SHORT).show();
+                       wmgr.startScan();
+
+                       List<ScanResult> results = wmgr.getScanResults();
+
+                       for (ScanResult R : results) {
+                               Log.d("textTag","WIFI FYPWF " + R.BSSID + " " + R.level + " "
+                                       + R.SSID);
+                           locationListArray.add("WIFI FYPWF " + R.BSSID + " " + R.level + " "
+                                   + R.SSID);
+                           ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                                   LearnClass.this,
+                                   android.R.layout.simple_list_item_1,
+                                   locationListArray );
+                           lv.setAdapter(arrayAdapter);
 
 
+                       }
                    }
-
                 }else{
+
                     Toast.makeText(LearnClass.this, "Open Your WIFI Connection" , Toast.LENGTH_SHORT).show();
                 }
 
-
-
+                List<ScanResult> results = wmgr.getScanResults();
 
             }
 
