@@ -1,57 +1,133 @@
 package com.example.l31106.healthbuddy;
 
-import org.json.JSONArray;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
+import android.view.View;
+import android.support.design.widget.NavigationView;
+import android.support.v4.view.GravityCompat;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
+import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.widget.ArrayAdapter;
+import android.widget.Spinner;
+import android.widget.Toast;
 
-import java.util.ArrayList;
+public class Location extends AppCompatActivity
+        implements NavigationView.OnNavigationItemSelectedListener {
 
-/**
- * Created by L31106 on 9/7/2017.
- */
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_location);
+        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        setSupportActionBar(toolbar);
 
-public class Location {
-   private String group;
-    private String username;
-    private String location;
-    private int time;
-    private ArrayList fingerprint;
 
-    public String getGroup() {
-        return group;
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
+                this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
+        drawer.setDrawerListener(toggle);
+        toggle.syncState();
+
+        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        navigationView.setNavigationItemSelectedListener(this);
     }
 
-    public void setGroup(String group) {
-        this.group = group;
+    @Override
+    public void onBackPressed() {
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        if (drawer.isDrawerOpen(GravityCompat.START)) {
+            drawer.closeDrawer(GravityCompat.START);
+        } else {
+            super.onBackPressed();
+        }
     }
 
-    public String getUsername() {
-        return username;
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.main, menu);
+        return true;
     }
 
-    public void setUsername(String username) {
-        this.username = username;
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        // Handle action bar item clicks here. The action bar will
+        // automatically handle clicks on the Home/Up button, so long
+        // as you specify a parent activity in AndroidManifest.xml.
+        int id = item.getItemId();
+
+        //noinspection SimplifiableIfStatement
+        if (id == R.id.action_settings) {
+            return true;
+        }
+
+        return super.onOptionsItemSelected(item);
     }
 
-    public String getLocation() {
-        return location;
-    }
+    @SuppressWarnings("StatementWithEmptyBody")
+    @Override
+    public boolean onNavigationItemSelected(MenuItem item) {
+        // Handle navigation view item clicks here.
+        int id = item.getItemId();
 
-    public void setLocation(String location) {
-        this.location = location;
-    }
+        if (id == R.id.nav_Learn) {
+            Intent learnIntent = new Intent(this, LearnClass.class);
+            //Added code try prevent stack
+            learnIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(learnIntent);
+        } else if (id == R.id.nav_Direction) {
 
-    public int getTime() {
-        return time;
-    }
+        } else if (id == R.id.nav_Help) {
 
-    public void setTime(int time) {
-        this.time = time;
-    }
+        } else if (id == R.id.nav_Preferences) {
 
-    public ArrayList getFingerprint() {
-        return fingerprint;
-    }
+            AlertDialog.Builder mBuilder = new AlertDialog.Builder(Location.this);
+            View mView = getLayoutInflater().inflate(R.layout.language_spinner, null);
+            mBuilder.setTitle("Select Your Preferred Language");
+            final Spinner mSpinner = (Spinner) mView.findViewById(R.id.spinnerLanguage);
+            ArrayAdapter<String> adapter = new ArrayAdapter<String>(Location.this,
+                    android.R.layout.simple_spinner_item, getResources().getStringArray(R.array.languageList));
+            adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+            mSpinner.setAdapter(adapter);
 
-    public void setFingerprint(ArrayList fingerprint) {
-        this.fingerprint = fingerprint;
+            mBuilder.setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    if (!mSpinner.getSelectedItem().toString().equalsIgnoreCase("Select Your Preferred Language")) {
+                        Toast.makeText(Location.this, mSpinner.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+                        dialogInterface.dismiss();
+                    }
+                }
+            });
+
+            mBuilder.setNegativeButton("Dismiss", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialogInterface, int i) {
+                    dialogInterface.dismiss();
+                }
+            });
+
+            mBuilder.setView(mView);
+            AlertDialog dialog = mBuilder.create();
+            dialog.show();
+
+        } else if (id == R.id.nav_aboutWayFinder) {
+
+        } else if (id == R.id.nav_Home) {
+            //No Need To Add Learn
+        }
+
+        DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+        drawer.closeDrawer(GravityCompat.START);
+        return true;
     }
 }

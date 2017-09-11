@@ -3,6 +3,7 @@ package com.example.l31106.healthbuddy;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.provider.ContactsContract;
 import android.support.v7.app.AlertDialog;
 import android.view.View;
 import android.support.design.widget.NavigationView;
@@ -51,6 +52,17 @@ MainActivity extends AppCompatActivity
                 //Prevent Stacking
                 loadLearnActivity.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                 startActivity(loadLearnActivity);
+                finish();
+            }
+        });
+        ImageButton ButtonDirection;
+        ButtonDirection = (ImageButton)findViewById(R.id.imageButtonDirection);
+        ButtonDirection.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent LoadButtonDirection = new Intent(MainActivity.this,Location.class);
+                startActivity(LoadButtonDirection);
+                finish();
             }
         });
     }
