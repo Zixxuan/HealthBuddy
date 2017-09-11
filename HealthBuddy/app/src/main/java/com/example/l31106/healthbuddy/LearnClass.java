@@ -131,6 +131,7 @@ public class LearnClass extends AppCompatActivity implements NavigationView.OnNa
     }
 
     public class JSONtask extends AsyncTask<String, String, String >{
+        ArrayList<String> aList = new ArrayList<String>();
 
         @Override
         protected String doInBackground(String... params) {
@@ -154,13 +155,14 @@ public class LearnClass extends AppCompatActivity implements NavigationView.OnNa
                 String finalJson = sBuffer.toString();
                 JSONObject parentObject = new JSONObject(finalJson);
                 JSONObject parentArray = parentObject.getJSONObject("locations");
+
                 Iterator<String> iterator = parentArray.keys();
-                ArrayList<String> aList = new ArrayList<String>();
                 while(iterator.hasNext()){
-                    aList.add(iterator.next().toString());
+                    aList.add(iterator.next());
+
                 }
 
-                return null;
+                return aList.toString();
 
             }catch (MalformedURLException e) {
                 e.printStackTrace();
@@ -180,13 +182,18 @@ public class LearnClass extends AppCompatActivity implements NavigationView.OnNa
                     e.printStackTrace();
                 }
             }
-            return null;
+
+          return null;
         }
 
         @Override
         protected  void onPostExecute(String result){
             super.onPostExecute(result);
-            // parse JSON result to list to listView
+            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                    LearnClass.this,
+                    android.R.layout.simple_list_item_1,
+                    aList );
+            lv.setAdapter(arrayAdapter);
 
         }
 
