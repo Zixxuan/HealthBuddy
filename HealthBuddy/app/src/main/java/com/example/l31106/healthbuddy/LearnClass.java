@@ -8,6 +8,7 @@ import android.content.IntentFilter;
 import android.net.wifi.ScanResult;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
@@ -30,11 +31,24 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Map;
+
+import javax.net.ssl.HttpsURLConnection;
 
 /**
  * Created by L31106 on 9/7/2017.
@@ -57,6 +71,7 @@ public class LearnClass extends AppCompatActivity implements NavigationView.OnNa
         super.onCreate(savedInstanceState);
         setContentView(R.layout.learn_main);
 
+        new JSONtask().execute("https://ml.internalpositioning.com/locations?group=wayFindp3");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -68,7 +83,6 @@ public class LearnClass extends AppCompatActivity implements NavigationView.OnNa
         drawer.setDrawerListener(toggle);
         toggle.syncState();
         lv = (ListView) findViewById(R.id.locList);
-
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -90,8 +104,8 @@ public class LearnClass extends AppCompatActivity implements NavigationView.OnNa
                        List<ScanResult> results = wmgr.getScanResults();
 
                        for (ScanResult R : results) {
-                               Log.d("textTag","WIFI FYPWF " + R.BSSID + " " + R.level + " "
-                                       + R.SSID);
+                              // Log.d("textTag","WIFI FYPWF " + R.BSSID + " " + R.level + " "
+                                //       + R.SSID);
                           /* locationListArray.add("WIFI FYPWF " + R.BSSID + " " + R.level + " "
                                    + R.SSID);
                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
@@ -114,6 +128,78 @@ public class LearnClass extends AppCompatActivity implements NavigationView.OnNa
 
 
         });
+    }
+
+    public class JSONtask extends AsyncTask<String, String, String >{
+
+        @Override
+        protected String doInBackground(String... params) {
+            HttpsURLConnection connection = null;
+            BufferedReader reader = null;
+
+            try{
+                URL link = new URL(params[0]);
+                connection = (HttpsURLConnection) link.openConnection();
+                connection.connect();
+
+                InputStream stream = connection.getInputStream();
+                reader =  new BufferedReader(new InputStreamReader(stream));
+
+                StringBuffer sBuffer = new StringBuffer();
+                String line = "";
+
+                while((line = reader.readLine()) != null){
+                    sBuffer.append(line);
+                }
+                String finalJson = sBuffer.toString();
+                JSONObject parentObject = new JSONObject(finalJson);
+                JSONObject parentArray = parentObject.getJSONObject("locations");
+                Iterator<String> iterator = parentArray.keys();
+                ArrayList<String> aList = new ArrayList<String>();
+                while(iterator.hasNext()){
+                    aList.add(iterator.next().toString());
+                }
+
+                for(int i = 0; i<aList.size(); i++){
+                    Log.d("ZixuanTest", aList.get(i).toString());
+                }
+
+
+
+
+
+
+
+                return sBuffer.toString();
+
+            }catch (MalformedURLException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } finally {
+                if(connection != null) {
+                    connection.disconnect();
+                }
+                try {
+                    if(reader != null) {
+                        reader.close();
+                    }
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+            return null;
+        }
+
+        @Override
+        protected  void onPostExecute(String result){
+            super.onPostExecute(result);
+            // parse JSON result to list to listView
+
+        }
+
     }
 
 
