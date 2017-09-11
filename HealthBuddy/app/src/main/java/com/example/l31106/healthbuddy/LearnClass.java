@@ -160,17 +160,7 @@ public class LearnClass extends AppCompatActivity implements NavigationView.OnNa
                     aList.add(iterator.next().toString());
                 }
 
-                for(int i = 0; i<aList.size(); i++){
-                    Log.d("ZixuanTest", aList.get(i).toString());
-                }
-
-
-
-
-
-
-
-                return sBuffer.toString();
+                return null;
 
             }catch (MalformedURLException e) {
                 e.printStackTrace();
