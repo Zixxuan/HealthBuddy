@@ -92,14 +92,14 @@ public class LearnClass extends AppCompatActivity implements NavigationView.OnNa
                        for (ScanResult R : results) {
                                Log.d("textTag","WIFI FYPWF " + R.BSSID + " " + R.level + " "
                                        + R.SSID);
-                           locationListArray.add("WIFI FYPWF " + R.BSSID + " " + R.level + " "
+                          /* locationListArray.add("WIFI FYPWF " + R.BSSID + " " + R.level + " "
                                    + R.SSID);
                            ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                                    LearnClass.this,
                                    android.R.layout.simple_list_item_1,
                                    locationListArray );
                            lv.setAdapter(arrayAdapter);
-
+                          */
 
                        }
                    }
@@ -149,6 +149,10 @@ public class LearnClass extends AppCompatActivity implements NavigationView.OnNa
         if (id == R.id.nav_Learn) {
             //No Need To Add Learn
         } else if (id == R.id.nav_Direction) {
+            Intent dirIntent = new Intent(this, Location.class);
+            //Prevent Stacking
+            dirIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(dirIntent);
 
         } else if (id == R.id.nav_Help) {
 

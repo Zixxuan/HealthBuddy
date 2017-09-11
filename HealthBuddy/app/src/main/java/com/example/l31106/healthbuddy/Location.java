@@ -124,6 +124,10 @@ public class Location extends AppCompatActivity
 
         } else if (id == R.id.nav_Home) {
             //No Need To Add Learn
+            Intent homeIntent = new Intent(this, MainActivity.class);
+            //Prevent Stacking
+            homeIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(homeIntent);
         }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);

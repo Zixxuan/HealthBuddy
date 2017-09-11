@@ -112,6 +112,10 @@ MainActivity extends AppCompatActivity
             learnIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(learnIntent);
         } else if (id == R.id.nav_Direction) {
+            Intent dirIntent = new Intent(this, Location.class);
+            //Added code try prevent stack
+            dirIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(dirIntent);
 
         } else if (id == R.id.nav_Help) {
 
