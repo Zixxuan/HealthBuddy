@@ -29,6 +29,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import org.apache.http.client.methods.HttpPost;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -94,7 +95,11 @@ public class LearnClass extends AppCompatActivity implements NavigationView.OnNa
                 if(wmgr.isWifiEnabled()){
                     WifiInfo wifiInfo = wmgr.getConnectionInfo();
                    if(wifiInfo.getSupplicantState().toString().equals("COMPLETED")) {
-                        insertToPost();
+                       if(!locText.getText().toString().matches("")) {
+                           insertToPost();
+                       }else{
+                    Toast.makeText(LearnClass.this, "Enter A Location To Learn" , Toast.LENGTH_SHORT).show();
+                       }
                   }
                 }else{
                     Toast.makeText(LearnClass.this, "Open Your WIFI Connection" , Toast.LENGTH_SHORT).show();
@@ -106,6 +111,20 @@ public class LearnClass extends AppCompatActivity implements NavigationView.OnNa
     private void insertToPost(){
         String json = formatDataAsJSON();
         Log.d("json String", json.toString());
+
+        String urlString = "https://ml.internalpositioning.com/learn";
+
+        try {
+            URL url = new URL(urlString);
+            HttpURLConnection connection = (HttpURLConnection)url.openConnection();
+            connection.setRequestMethod("POST");
+            connection.setDoInput(true);
+            connection.connect();
+        } catch (MalformedURLException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
 
     }
