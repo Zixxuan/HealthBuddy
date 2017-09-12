@@ -24,9 +24,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.SimpleAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -34,19 +32,18 @@ import android.widget.Toast;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.lang.reflect.Array;
+
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -62,17 +59,21 @@ public class LearnClass extends AppCompatActivity implements NavigationView.OnNa
     WifiManager wmgr;
     private ListView lv;
     ArrayList<String> locationListArray = new ArrayList<String>();
+    String location;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.learn_main);
 
-     //   new JSONtask().execute("https://ml.internalpositioning.com/locations?group=wayFindp3");
+      new JSONtask().execute("https://ml.internalpositioning.com/locations?group=wayFindp3");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         wmgr = (WifiManager) getApplicationContext().getSystemService(Context.WIFI_SERVICE);
+        if(!wmgr.isWifiEnabled()){
+            Toast.makeText(LearnClass.this, "Open Your WIFI Connection" , Toast.LENGTH_SHORT).show();
+        }
 
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
@@ -88,68 +89,60 @@ public class LearnClass extends AppCompatActivity implements NavigationView.OnNa
         locText = (TextView) findViewById(R.id.locationText);
         Button locButton = (Button)findViewById(R.id.learnLocButton);
         locButton.setOnClickListener(new View.OnClickListener(){
-
-
-
             @Override
             public void onClick(View view){
                 if(wmgr.isWifiEnabled()){
                     WifiInfo wifiInfo = wmgr.getConnectionInfo();
                    if(wifiInfo.getSupplicantState().toString().equals("COMPLETED")) {
-
-
-                       wmgr.startScan();
-
-                       JSONArray wifiFingerprint = new JSONArray();
-                       JSONObject fingerprint = new JSONObject();
-                       List<ScanResult> results = wmgr.getScanResults();
-
-                       for (ScanResult R : results) {
-                           if(!R.SSID.equals("NYP-Student")) {
-                               try {
-                                   fingerprint.put("mac",R.BSSID.toString());
-                                   fingerprint.put("rssi", R.level);
-                                   fingerprint.put("group", "wayfindp3");
-                                   fingerprint.put("location",locText );
-                                   fingerprint.put("username", "P3");
-                                   Log.d("mac & rssi of AP", fingerprint.get("mac").toString() + " " + fingerprint.get("rssi") + " " + R.SSID);
-                               } catch (JSONException e) {
-                                   e.printStackTrace();
-                               }finally {
-                                   wifiFingerprint.put(fingerprint);
-                               }
-                           /*    locationListArray.add("WIFI FYPWF " + R.BSSID + " " + R.level);
-                               ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                                       LearnClass.this,
-                                       android.R.layout.simple_list_item_1,
-                                       locationListArray);
-
-                               lv.setAdapter(arrayAdapter);
-                           */
-                           }
-                       }
-                       Log.d("JSONArray Size", wifiFingerprint.length() + "");
-                       String timeStamp = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()) + "";
-                       Log.d("Time EPOCH", timeStamp);
-
-                   }
+                        insertToPost();
+                  }
                 }else{
-
                     Toast.makeText(LearnClass.this, "Open Your WIFI Connection" , Toast.LENGTH_SHORT).show();
                 }
-
-
-
             }
-
-
         });
     }
 
+    private void insertToPost(){
+        String json = formatDataAsJSON();
+        Log.d("json String", json.toString());
 
 
+    }
 
 
+    private String formatDataAsJSON() {
+        JSONObject root = new JSONObject();
+        JSONArray wifiFingerprint = new JSONArray();
+        JSONObject fingerprint = new JSONObject();
+
+        List<ScanResult> results = wmgr.getScanResults();
+        String timeStamp = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()) + "";
+        wmgr.startScan();
+
+        for (ScanResult R : results) {
+            if (!R.SSID.equals("NYP-Student")) {
+                try {
+                    fingerprint.put("mac", R.BSSID.toString());
+                    fingerprint.put("rssi", R.level);
+                    wifiFingerprint.put(fingerprint);
+                    location = locText.getText().toString();
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        try {
+            root.put("group", "wayfindp3");
+            root.put("username", "P3");
+            root.put("location", location);
+            root.put("time", timeStamp);
+            root.put("wifi-fingerprint", wifiFingerprint);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return root.toString();
+    }
 
 
 
