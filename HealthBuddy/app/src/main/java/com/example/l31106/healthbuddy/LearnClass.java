@@ -47,6 +47,7 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 import javax.net.ssl.HttpsURLConnection;
 
@@ -58,20 +59,16 @@ public class LearnClass extends AppCompatActivity implements NavigationView.OnNa
 
     //Variables
     TextView locText;
-    int counter;
-    TextView rText;
     WifiManager wmgr;
     private ListView lv;
     ArrayList<String> locationListArray = new ArrayList<String>();
-
-
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.learn_main);
 
-        new JSONtask().execute("https://ml.internalpositioning.com/locations?group=wayFindp3");
+     //   new JSONtask().execute("https://ml.internalpositioning.com/locations?group=wayFindp3");
 
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
@@ -87,7 +84,7 @@ public class LearnClass extends AppCompatActivity implements NavigationView.OnNa
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
 
-    //    rText = (TextView) findViewById(R.id.recText);
+
         locText = (TextView) findViewById(R.id.locationText);
         Button locButton = (Button)findViewById(R.id.learnLocButton);
         locButton.setOnClickListener(new View.OnClickListener(){
@@ -99,30 +96,37 @@ public class LearnClass extends AppCompatActivity implements NavigationView.OnNa
                 if(wmgr.isWifiEnabled()){
                     WifiInfo wifiInfo = wmgr.getConnectionInfo();
                    if(wifiInfo.getSupplicantState().toString().equals("COMPLETED")) {
-                       wmgr.startScan();
 
+                /*          ---------------- REMEMBER TO USE LATER ---------------
+                       wmgr.startScan();
                        List<ScanResult> results = wmgr.getScanResults();
 
                        for (ScanResult R : results) {
-                              // Log.d("textTag","WIFI FYPWF " + R.BSSID + " " + R.level + " "
-                                //       + R.SSID);
-                          /* locationListArray.add("WIFI FYPWF " + R.BSSID + " " + R.level + " "
-                                   + R.SSID);
-                           ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
-                                   LearnClass.this,
-                                   android.R.layout.simple_list_item_1,
-                                   locationListArray );
-                           lv.setAdapter(arrayAdapter);
-                          */
+                               Log.d("textTag","WIFI FYPWF " + R.BSSID + " " + R.level);
+                           if(R.SSID.equals("NYP-Account")) {
+                               locationListArray.add("WIFI FYPWF " + R.BSSID + " " + R.level);
+
+                               ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
+                                       LearnClass.this,
+                                       android.R.layout.simple_list_item_1,
+                                       locationListArray);
+
+                               lv.setAdapter(arrayAdapter);
+                           }
+
 
                        }
+                  */
+                       String timeStamp = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()) + "";
+                       Log.d("Time EPOCH", timeStamp);
+
                    }
                 }else{
 
                     Toast.makeText(LearnClass.this, "Open Your WIFI Connection" , Toast.LENGTH_SHORT).show();
                 }
 
-                List<ScanResult> results = wmgr.getScanResults();
+
 
             }
 
