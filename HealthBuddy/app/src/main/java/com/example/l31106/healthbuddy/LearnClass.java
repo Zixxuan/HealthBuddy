@@ -97,26 +97,38 @@ public class LearnClass extends AppCompatActivity implements NavigationView.OnNa
                     WifiInfo wifiInfo = wmgr.getConnectionInfo();
                    if(wifiInfo.getSupplicantState().toString().equals("COMPLETED")) {
 
-                /*          ---------------- REMEMBER TO USE LATER ---------------
+
                        wmgr.startScan();
+
+                       JSONArray wifiFingerprint = new JSONArray();
+                       JSONObject fingerprint = new JSONObject();
                        List<ScanResult> results = wmgr.getScanResults();
 
                        for (ScanResult R : results) {
-                               Log.d("textTag","WIFI FYPWF " + R.BSSID + " " + R.level);
-                           if(R.SSID.equals("NYP-Account")) {
-                               locationListArray.add("WIFI FYPWF " + R.BSSID + " " + R.level);
-
+                           if(!R.SSID.equals("NYP-Student")) {
+                               try {
+                                   fingerprint.put("mac",R.BSSID.toString());
+                                   fingerprint.put("rssi", R.level);
+                                   fingerprint.put("group", "wayfindp3");
+                                   fingerprint.put("location",locText );
+                                   fingerprint.put("username", "P3");
+                                   Log.d("mac & rssi of AP", fingerprint.get("mac").toString() + " " + fingerprint.get("rssi") + " " + R.SSID);
+                               } catch (JSONException e) {
+                                   e.printStackTrace();
+                               }finally {
+                                   wifiFingerprint.put(fingerprint);
+                               }
+                           /*    locationListArray.add("WIFI FYPWF " + R.BSSID + " " + R.level);
                                ArrayAdapter<String> arrayAdapter = new ArrayAdapter<String>(
                                        LearnClass.this,
                                        android.R.layout.simple_list_item_1,
                                        locationListArray);
 
                                lv.setAdapter(arrayAdapter);
+                           */
                            }
-
-
                        }
-                  */
+                       Log.d("JSONArray Size", wifiFingerprint.length() + "");
                        String timeStamp = TimeUnit.MILLISECONDS.toSeconds(System.currentTimeMillis()) + "";
                        Log.d("Time EPOCH", timeStamp);
 
@@ -133,6 +145,13 @@ public class LearnClass extends AppCompatActivity implements NavigationView.OnNa
 
         });
     }
+
+
+
+
+
+
+
 
     public class JSONtask extends AsyncTask<String, String, String >{
         ArrayList<String> aList = new ArrayList<String>();
